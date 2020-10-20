@@ -9,18 +9,12 @@ public class Q3Q4Solution {
      * @param k The number of nearest hospital to be found.
      * @return two array of List of Integer representing the answer.
      */
-    public int[] solve(CityGraph graph, int k) {
+    public Answer solve(CityGraph graph, int k) {
         return null;
     }
 
 
     public class Answer {
-        public List<Integer>[] nearest;
-        public List<Integer>[] parent;
 
-        Answer(List<Integer>[] nearest, List<Integer>[] parent) {
-            this.nearest = nearest;
-            this.parent = parent;
-        }
     }
 }

@@ -54,59 +54,58 @@ public class CityGraph {
         return this.nonHospitals;
     }
 
-    public int V() {
+    public final int V() {
         return nodeNum();
     }
 
-    public int E() {
+    public final int E() {
         return edgeNum();
     }
 
-    public int H() {
+    public final int H() {
         return hospitalNum();
     }
 
-    public boolean isH(int node) {
+    public final boolean isH(int node) {
         return isHospital(node);
     }
 
-    public Iterable<Integer> adj(int node) {
+    public final Iterable<Integer> adj(int node) {
         return adjacentNodes(node);
     }
 
-    public Iterable<Integer> allH() {
+    public final Iterable<Integer> allH() {
         return hospitals();
     }
 
-    public Iterable<Integer> nonH() {
+    public final Iterable<Integer> nonH() {
         return nonHospitals();
     }
-
-
 
     /**
      * Builder for the graph
      */
     public static class Builder {
-        private int nodeNum;
         private int edgeNum;
         private List<Set<Integer>> edges;
-        private boolean[] isHospital;
+        private List<Boolean> isHospital;
         private int hospitalCount;
 
-        Builder(int totalNodeNum) {
-            nodeNum = totalNodeNum;
+        Builder() {
             edgeNum = 0;
-            edges = new ArrayList<>(nodeNum);
-            isHospital = new boolean[nodeNum];
+            edges = new ArrayList<>();
+            isHospital = new ArrayList<Boolean>();
             hospitalCount = 0;
+        }
 
-            for (int i = 0; i < totalNodeNum; ++i) {
-                edges.add(new HashSet<>());
-            }
+        public int nodeNum() {
+            return edges.size();
         }
 
         public void addEdge(int node0, int node1) {
+            updateNodeNum(node0);
+            updateNodeNum(node1);
+
             if (edges.get(node0).contains(node1)) {
                 return;
             }
@@ -125,38 +124,55 @@ public class CityGraph {
         }
 
         public void setHospital(int node) {
-            if (!isHospital[node]) {
+            updateNodeNum(node);
+            
+            if (!isHospital.get(node)) {
                 ++hospitalCount;
-                isHospital[node] = true;
+                isHospital.set(node, true);
             }
         }
 
         public void unsetHospital(int node) {
-            if (isHospital[node]) {
+            if (isHospital.get(node)) {
                 --hospitalCount;
-                isHospital[node] = false;
+                isHospital.set(node, false);
             }
         }
 
         public CityGraph build() {
+            int nodeNum = edges.size();
+
             List<List<Integer>> e = new ArrayList<>(nodeNum);
 
             for (Set<Integer> adj: edges) {
                 e.add(new ArrayList<>(adj));
             }
 
+            boolean[] isHospital = new boolean[nodeNum];
+
             List<Integer> hospitals = new ArrayList<>(hospitalCount);
             List<Integer> nonHospitals = new ArrayList<>(nodeNum - hospitalCount);
 
             for (int i = 0; i < nodeNum; ++i) {
-                if (isHospital[i]) {
+                if (this.isHospital.get(i)) {
                     hospitals.add(i);
+                    isHospital[i] = true;
                 } else {
                     nonHospitals.add(i);
                 }
             }
 
             return new CityGraph(nodeNum, edgeNum, e, hospitals, nonHospitals, isHospital);
+        }
+
+        private void updateNodeNum(int nodeId) {
+            if (nodeId < nodeNum()){
+                return;
+            }
+            for (int i = nodeNum(); i <= nodeId; ++i) {
+                edges.add(new HashSet<>());
+                isHospital.add(false);
+            }
         }
     }
 
