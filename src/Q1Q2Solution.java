@@ -12,22 +12,22 @@ public class Q1Q2Solution {
      * @return Two int array representing the answer.
      */
     public Answer solve(CityGraph graph) {
-        int[] nearest = new int[graph.V()];
+        int[] dist = new int[graph.V()];
         int[] parent = new int[graph.V()];
-        Arrays.fill(nearest, -1);
+        Arrays.fill(dist, -1);
         Arrays.fill(parent, -1);
 
         // Other Solution code
 
-        return new Answer(nearest, parent);
+        return new Answer(dist, parent);
     }
 
     public class Answer {
         public int[] parent;
-        public int[] nearest;
+        public int[] dist;
 
         Answer(int[] nearest, int[] parent) {
-            this.nearest = nearest;
+            this.dist = nearest;
             this.parent = parent;
         }
     }
