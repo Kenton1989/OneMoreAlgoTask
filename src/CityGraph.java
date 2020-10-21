@@ -91,11 +91,16 @@ public class CityGraph {
         private List<Boolean> isHospital;
         private int hospitalCount;
 
-        Builder() {
+        Builder(int nodeNum) {
             edgeNum = 0;
-            edges = new ArrayList<>();
-            isHospital = new ArrayList<Boolean>();
+            edges = new ArrayList<>(nodeNum);
+            isHospital = new ArrayList<Boolean>(nodeNum);
             hospitalCount = 0;
+
+            for (int i = 0; i < nodeNum; ++i) {
+                edges.add(new HashSet<>());
+                isHospital.add(false);
+            }
         }
 
         public int nodeNum() {
