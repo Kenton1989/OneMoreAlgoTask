@@ -1,15 +1,8 @@
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Q4Solution {
-
-    /**
-     * Solution for question 4 in lab 2.
-     *
-     * @param graph A undirected unweighted graph representing the city road network.
-     * @return
-     */
 
     private static class searchContext {
 
@@ -22,71 +15,43 @@ public class Q4Solution {
         }
     }
 
-    public static void solve(CityGraph graph) {
+    /**
+     * Solution for question 4 in lab 2.
+     *
+     * @param graph A undirected unweighted graph representing the city road network.
+     * @param k     the number of nearest hospitals needed to be found.
+     * @return
+     */
 
-        int[] pre1 = new int[graph.V()],
-                pre2 = new int[graph.V()],
-                hos1 = new int[graph.V()],
-                hos2 = new int[graph.V()];
-        Arrays.fill(pre1, -2);
-        Arrays.fill(pre2, -2);
-        Arrays.fill(hos1, -2);
-        Arrays.fill(hos2, -2);
-
+    public static void solve(CityGraph graph, int k) {
+        HashSet<Integer>[] hashSets = new HashSet[graph.V()];
         LinkedList<searchContext> queue = new LinkedList<>();
-        for (int h : graph.allH()) {
-            queue.push(new searchContext(h, h));
-            pre1[h] = -1;
-            hos1[h] = h;
+
+        for (int i = 0; i < graph.V(); i++) {
+            hashSets[i] = new HashSet<>();
+            if (graph.isHospital(i)) {
+                hashSets[i].add(i);
+                queue.push(new searchContext(i, i));
+            }
         }
 
-
         while (!queue.isEmpty()) {
-//            System.out.println("One step");
             searchContext context = queue.removeLast();
-            System.out.printf("%d %d\n", context.currentNode, context.hospital);
-            for (int adjacent : graph.adj(context.currentNode)) {
-                if (pre1[adjacent] == -2) {
-                    pre1[adjacent] = context.currentNode;
-                    hos1[adjacent] = context.hospital;
-                    queue.push(new searchContext(adjacent, context.hospital));
-                } else if (pre2[adjacent] == -2 && hos1[adjacent] != context.hospital) {
-                    pre2[adjacent] = context.currentNode;
-                    hos2[adjacent] = context.hospital;
-                    queue.push(new searchContext(adjacent, context.hospital));
+            for (int adj : graph.adj(context.currentNode)) {
+                if (hashSets[adj].size() < k && !hashSets[adj].contains(context.hospital)) {
+                    hashSets[adj].add(context.hospital);
+                    queue.push(new searchContext(adj, context.hospital));
                 }
             }
         }
 
-        System.out.println(Arrays.toString(pre1));
-        System.out.println(Arrays.toString(hos1));
-        System.out.println(Arrays.toString(pre2));
-        System.out.println(Arrays.toString(hos2));
-
         for (int i = 0; i < graph.V(); i++) {
-            System.out.printf("Point %d:\n", i);
-
-            System.out.printf("First nearest hospital: %d\n", hos1[i]);
-            int next = pre1[i];
-            System.out.printf("Route: %d", i);
-            while (next != -1) {
-                System.out.printf(" -> %d", next);
-                next = hos1[next] == hos1[i] ? pre1[next] : pre2[next];
+            System.out.printf("Point %d:\n Nearest %d hospitals:", i, k);
+            for (int h : hashSets[i]) {
+                System.out.printf(" %d", h);
             }
-            System.out.println();
-
-            System.out.printf("Second nearest hospital: %d\n", hos2[i]);
-            next = pre2[i];
-            System.out.printf("Route: %d", i);
-            while (next != -1) {
-                System.out.printf(" -> %d", next);
-                next = hos1[next] == hos2[i] ? pre1[next] : pre2[next];
-            }
-            System.out.println();
             System.out.println();
         }
-
-//        return null;
     }
 
     public class Answer {
@@ -111,6 +76,8 @@ public class Q4Solution {
             builder.setHospital(scanner.nextInt());
         }
 
-        solve(builder.build());
+        int k = scanner.nextInt();
+
+        solve(builder.build(), k);
     }
 }
