@@ -43,7 +43,7 @@ public class Q3Solution {
         while (!queue.isEmpty()) {
 //            System.out.println("One step");
             searchContext context = queue.removeLast();
-            System.out.printf("%d %d\n", context.currentNode, context.hospital);
+//            System.out.printf("%d %d\n", context.currentNode, context.hospital);
             for (int adjacent : graph.adj(context.currentNode)) {
                 if (pre1[adjacent] == -2) {
                     pre1[adjacent] = context.currentNode;
@@ -57,10 +57,10 @@ public class Q3Solution {
             }
         }
 
-        System.out.println(Arrays.toString(pre1));
-        System.out.println(Arrays.toString(hos1));
-        System.out.println(Arrays.toString(pre2));
-        System.out.println(Arrays.toString(hos2));
+//        System.out.println(Arrays.toString(pre1));
+//        System.out.println(Arrays.toString(hos1));
+//        System.out.println(Arrays.toString(pre2));
+//        System.out.println(Arrays.toString(hos2));
 
         for (int i = 0; i < graph.V(); i++) {
             System.out.printf("Point %d:\n", i);
