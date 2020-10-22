@@ -25,30 +25,35 @@ public class Q4Solution {
 
     public static void solve(CityGraph graph, int k) {
         HashSet<Integer>[] hashSets = new HashSet[graph.V()];
-        LinkedList<searchContext> queue = new LinkedList<>();
+        LinkedList<Integer>[] queues = new LinkedList[graph.V()];
+        LinkedList<searchContext> BFSQueue = new LinkedList<>();
+
 
         for (int i = 0; i < graph.V(); i++) {
             hashSets[i] = new HashSet<>();
+            queues[i] = new LinkedList<>();
             if (graph.isHospital(i)) {
                 hashSets[i].add(i);
-                queue.push(new searchContext(i, i));
+                queues[i].push(i);
+                BFSQueue.push(new searchContext(i, i));
             }
         }
 
-        while (!queue.isEmpty()) {
-            searchContext context = queue.removeLast();
+        while (!BFSQueue.isEmpty()) {
+            searchContext context = BFSQueue.removeLast();
             for (int adj : graph.adj(context.currentNode)) {
                 if (hashSets[adj].size() < k && !hashSets[adj].contains(context.hospital)) {
                     hashSets[adj].add(context.hospital);
-                    queue.push(new searchContext(adj, context.hospital));
+                    queues[adj].push(context.hospital);
+                    BFSQueue.push(new searchContext(adj, context.hospital));
                 }
             }
         }
 
         for (int i = 0; i < graph.V(); i++) {
             System.out.printf("Point %d:\n Nearest %d hospitals:", i, k);
-            for (int h : hashSets[i]) {
-                System.out.printf(" %d", h);
+            while (!queues[i].isEmpty()) {
+                System.out.printf(" %d", queues[i].removeLast());
             }
             System.out.println();
         }
