@@ -91,6 +91,10 @@ public class CityGraph {
         private List<Boolean> isHospital;
         private int hospitalCount;
 
+        Builder() {
+            this(0);
+        }
+
         Builder(int nodeNum) {
             edgeNum = 0;
             edges = new ArrayList<>(nodeNum);
@@ -107,11 +111,19 @@ public class CityGraph {
             return edges.size();
         }
 
+        public int edgeNum() {
+            return edgeNum;
+        }
+
+        public int hospitalNum() {
+            return hospitalCount;
+        }
+
         public void addEdge(int node0, int node1) {
             updateNodeNum(node0);
             updateNodeNum(node1);
 
-            if (edges.get(node0).contains(node1)) {
+            if (node0 == node1 || edges.get(node0).contains(node1)) {
                 return;
             }
             ++edgeNum;
