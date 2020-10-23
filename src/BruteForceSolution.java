@@ -44,7 +44,7 @@ public class BruteForceSolution {
 
     
 
-    public class Answer {
+    public class Answer implements IAnswer {
         public CityGraph graph;
         public List<Integer>[] dist;
         public List<Integer>[] hosp;
@@ -55,7 +55,7 @@ public class BruteForceSolution {
             this.hosp = nearestHospital;
         }
 
-        public void printAnswer() {
+        public void printAns() {
             
         }
     }
