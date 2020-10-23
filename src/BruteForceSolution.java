@@ -26,7 +26,9 @@ public class BruteForceSolution {
      *         of size X.
      */
     public Answer solve(CityGraph graph, int k) {
+        @SuppressWarnings("unchecked")
         List<Integer>[] dist = new List[graph.V()];
+        @SuppressWarnings("unchecked")
         List<Integer>[] hosp = new List[graph.V()];
 
         for (int i = 0; i < graph.V(); i++) {

@@ -9,10 +9,20 @@ public class Q1Q2Solution {
     /**
      * Solution for question 1 & 2 in lab 2.
      * 
-     * @param graph A undirected unweighted graph representing a city road network.
-     * @return Two int array representing the answer.
+     * @param graph A undirected unweighted graph representing a city.
+     * @return Three int array representing the answer.
      * <p>
-     *      The first one is the distance between
+     *      The first one is the distance between the node and the nearest hospital.
+     *      If a node is hospital, the distance is 0.
+     *      If a node cannot reach any hospital, the diatance is -1.
+     * <p>
+     *      The second one is the node id of the nearest hospital.
+     *      If a node is hospital, the nearest hospital is itself.
+     *      If a node cannot reach any hospital, put a -1.
+     * <p>
+     *      The third one is the parent of a node in the BFS tree.
+     *      If a node is hospital, its parent is itself.
+     *      If a node cannot reach any hospital, put a -1.
      */
     public Answer solve(CityGraph graph) {
         int[] dist = new int[graph.V()];
@@ -28,7 +38,7 @@ public class Q1Q2Solution {
         return new Answer(graph, dist, hosp, parent);
     }
 
-    public class Answer {
+    public class Answer implements IAnswer {
         public CityGraph graph;
         public int[] parent;
         public int[] dist;
@@ -41,7 +51,7 @@ public class Q1Q2Solution {
             this.parent = parent;
         }
 
-        public void printAnswer() {
+        public void printAns() {
             
         }
     }

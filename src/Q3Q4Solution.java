@@ -1,24 +1,25 @@
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
-public class Q4Solution {
+public class Q3Q4Solution {
 
-    private static class searchContext {
-
+    private static class SearchContext {
         int currentNode;
-        int hospital;
+        int sourceHospital;
         int distance;
 
-        searchContext(int c, int h, int d) {
+        SearchContext(int c, int h, int d) {
             currentNode = c;
-            hospital = h;
+            sourceHospital = h;
             distance = d;
         }
     }
 
     /**
-     * Solution for question 4 in lab 2.
+     * Solution for question 3 & 4 in lab 2.
      *
      * @param graph A undirected unweighted graph representing the city road network.
      * @param k     the number of nearest hospitals needed to be found.
@@ -26,33 +27,40 @@ public class Q4Solution {
      */
 
     public static Answer solve(CityGraph graph, int k) {
-        HashSet<Integer>[] hashSets = new HashSet[graph.V()];
-        LinkedList<Integer>[] queues = new LinkedList[graph.V()];
-        LinkedList<Integer>[] distances = new LinkedList[graph.V()];
-        LinkedList<searchContext> BFSQueue = new LinkedList<>();
+        @SuppressWarnings("unchecked")
+        Set<Integer>[] hashSets = new HashSet[graph.V()];
+        
+        @SuppressWarnings("unchecked")
+        List<Integer>[] queues = new LinkedList[graph.V()];
+
+        @SuppressWarnings("unchecked")
+        List<Integer>[] distances = new LinkedList[graph.V()];
+
+        LinkedList<SearchContext> BFSQueue = new LinkedList<>();
 
 
         for (int i = 0; i < graph.V(); i++) {
-            hashSets[i] = new HashSet<>();
+            hashSets[i] = new HashSet<>(2*k);
             queues[i] = new LinkedList<>();
             distances[i] = new LinkedList<>();
 
             if (graph.isHospital(i)) {
                 hashSets[i].add(i);
-                queues[i].push(i);
-                distances[i].push(0);
-                BFSQueue.push(new searchContext(i, i, 0));
+
+                queues[i].add(i);
+                distances[i].add(0);
+                BFSQueue.push(new SearchContext(i, i, 0));
             }
         }
 
         while (!BFSQueue.isEmpty()) {
-            searchContext context = BFSQueue.removeLast();
+            SearchContext context = BFSQueue.removeLast();
             for (int adj : graph.adj(context.currentNode)) {
-                if (hashSets[adj].size() < k && !hashSets[adj].contains(context.hospital)) {
-                    hashSets[adj].add(context.hospital);
-                    queues[adj].push(context.hospital);
-                    distances[adj].push(context.distance + 1);
-                    BFSQueue.push(new searchContext(adj, context.hospital, context.distance + 1));
+                if (hashSets[adj].size() < k && !hashSets[adj].contains(context.sourceHospital)) {
+                    hashSets[adj].add(context.sourceHospital);
+                    queues[adj].add(context.sourceHospital);
+                    distances[adj].add(context.distance + 1);
+                    BFSQueue.push(new SearchContext(adj, context.sourceHospital, context.distance + 1));
                 }
             }
         }
@@ -60,12 +68,12 @@ public class Q4Solution {
         return new Answer(queues, distances, graph, k);
     }
 
-    public static class Answer {
-        private static LinkedList<Integer>[] queues, distances;
-        private static CityGraph graph;
-        private static int k;
+    public static class Answer implements IAnswer {
+        public static List<Integer>[] queues, distances;
+        public static CityGraph graph;
+        public static int k;
 
-        public Answer(LinkedList<Integer>[] queues, LinkedList<Integer>[] distances,
+        public Answer(List<Integer>[] queues, List<Integer>[] distances,
                       CityGraph graph, int k) {
             Answer.queues = queues;
             Answer.distances = distances;
@@ -73,16 +81,16 @@ public class Q4Solution {
             Answer.k = k;
         }
 
-        public void printout() {
+        public void printAns() {
             for (int i = 0; i < graph.V(); i++) {
                 System.out.printf("Point %d:\n", i);
                 if (queues[i].size() < k) {
                     System.out.printf("  This point cannot reach %d hospitals.\n", k);
                 }
                 System.out.printf("  Nearest %d hospitals:\n", queues[i].size());
-                while (!queues[i].isEmpty()) {
-                    System.out.printf("    Hospital: %d ", queues[i].removeLast());
-                    System.out.printf("Distance: %d\n", distances[i].removeLast());
+                for (int j = 0; j < queues[i].size(); j++) {
+                    System.out.printf("    Hospital: %d Distance: %d\n",
+                                       queues[i].get(j), distances[i].get(j));
                 }
                 System.out.println();
             }
@@ -110,6 +118,8 @@ public class Q4Solution {
         int k = scanner.nextInt();
 
         Answer answer = solve(builder.build(), k);
-        answer.printout();
+        answer.printAns();
+
+        scanner.close();
     }
 }
