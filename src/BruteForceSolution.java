@@ -41,7 +41,7 @@ public class BruteForceSolution {
             hosp[i] = new ArrayList<Integer>(k);
 
             int j = 0;
-            while (j < k)
+            while (j < k )
             if (graph.isH(i)) {
                 
             }
