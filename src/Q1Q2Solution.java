@@ -24,6 +24,7 @@ public class Q1Q2Solution {
      *      If a node is hospital, its parent is itself.
      *      If a node cannot reach any hospital, put a -1.
      */
+    
     public Answer solve(CityGraph graph) {
         int[] dist = new int[graph.V()];
         int[] hosp = new int[graph.V()];

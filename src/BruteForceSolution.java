@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
 
@@ -31,18 +33,22 @@ public class BruteForceSolution {
         @SuppressWarnings("unchecked")
         List<Integer>[] hosp = new List[graph.V()];
 
+        LinkedList<Integer> q = new LinkedList<>();
+        Set<Integer> visited = new HashSet<>();
+
         for (int i = 0; i < graph.V(); i++) {
             dist[i] = new ArrayList<Integer>(k);
             hosp[i] = new ArrayList<Integer>(k);
+
+            int j = 0;
+            while (j < k)
+            if (graph.isH(i)) {
+                
+            }
         }
-
-        Queue<Integer> queue = new LinkedList<>();
-
 
         return new Answer(graph, dist, hosp);
     }
-
-    
 
     public class Answer implements IAnswer {
         public CityGraph graph;
