@@ -131,29 +131,29 @@ public class BruteForceSolution {
     }
 
 
-public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-    int num = scanner.nextInt();
-    CityGraph.Builder builder = new CityGraph.Builder(num);
+        int num = scanner.nextInt();
+        CityGraph.Builder builder = new CityGraph.Builder(num);
 
-    int n = scanner.nextInt();
-    for (int i = 0; i < n; i++) {
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
-        builder.addEdge(x, y);
+        int n = scanner.nextInt();
+        for (int i = 0; i < n; i++) {
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            builder.addEdge(x, y);
+        }
+
+        int m = scanner.nextInt();
+        for (int i = 0; i < m; i++) {
+            builder.setHospital(scanner.nextInt());
+        }
+
+        int k = scanner.nextInt();
+
+        Answer answer = solve(builder.build(), k);
+        answer.printAns();
+
+        scanner.close();
     }
-
-    int m = scanner.nextInt();
-    for (int i = 0; i < m; i++) {
-        builder.setHospital(scanner.nextInt());
-    }
-
-    int k = scanner.nextInt();
-
-    Answer answer = solve(builder.build(), k);
-    answer.printAns();
-
-    scanner.close();
-}
 }
