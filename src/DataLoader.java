@@ -1,7 +1,11 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 public class DataLoader {
     public final static double DENSE_RATE = 0.66;
@@ -92,6 +96,23 @@ public class DataLoader {
         return builder.build();
     }
 
+    public void generateRandHospital(String filePath, int nodeNum, int hospitalNum) {
+        
+        Set<Integer> hospSet = new HashSet<>(2 * hospitalNum);
+        Random rand = new Random();
+        
+        while (hospSet.size() < hospitalNum) {
+            int randH = rand.nextInt(nodeNum);
+            hospSet.add(randH);
+        }
+        
+        PrintStream out = getPrinter(filePath);
+        out.println("# " + hospitalNum);
+        for (int h: hospSet) {
+            out.println(h);
+        }
+    }
+
     private void loadEdgesFromFile(String filePath, CityGraph.Builder builder) {
         Scanner sc = getScanner(filePath);
         while (sc.hasNextLine()) {
@@ -149,9 +170,21 @@ public class DataLoader {
 
         return sc;
     }
+    
+    private PrintStream getPrinter(String filePath) {
+        PrintStream printer = null;
+
+        try {
+            printer = new PrintStream(filePath);
+        } catch(FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        return printer;
+    }
 
     public static void main(String[] args) {
         DataLoader loader = new DataLoader();
-        // CityGraph graph = loader.loadRandomGraph(1_000_000, 10_000_000, 1000);
+        loader.generateRandHospital("real_road/PA/hospital.txt", 1088092, 1090);
     }
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,9 +8,9 @@ import java.util.Set;
 public class Q3Q4Solution {
 
     private static class SearchContext {
-        int currentNode;
-        int sourceHospital;
-        int distance;
+        public int currentNode;
+        public int sourceHospital;
+        public int distance;
 
         SearchContext(int c, int h, int d) {
             currentNode = c;
@@ -28,21 +29,21 @@ public class Q3Q4Solution {
 
     public static Answer solve(CityGraph graph, int k) {
         @SuppressWarnings("unchecked")
-        Set<Integer>[] hashSets = new HashSet[graph.V()];
+        Set<Integer>[] hashSets = new Set[graph.V()];
         
         @SuppressWarnings("unchecked")
-        List<Integer>[] queues = new LinkedList[graph.V()];
+        List<Integer>[] queues = new List[graph.V()];
 
         @SuppressWarnings("unchecked")
-        List<Integer>[] distances = new LinkedList[graph.V()];
+        List<Integer>[] distances = new List[graph.V()];
 
         LinkedList<SearchContext> BFSQueue = new LinkedList<>();
 
 
         for (int i = 0; i < graph.V(); i++) {
-            hashSets[i] = new HashSet<>(2*k);
-            queues[i] = new LinkedList<>();
-            distances[i] = new LinkedList<>();
+            hashSets[i] = new HashSet<>(3*k);
+            queues[i] = new ArrayList<>(k);
+            distances[i] = new ArrayList<>(k);
 
             if (graph.isHospital(i)) {
                 hashSets[i].add(i);
