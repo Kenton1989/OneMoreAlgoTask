@@ -82,6 +82,20 @@ public class CityGraph {
         return nonHospitals();
     }
 
+    private static String ROW_FORMAT = "%-8s %-10s %s";
+    private static String TABLE_HEADER = String.format(ROW_FORMAT, "Node#", "isHospital", "Adjacent Nodes");
+    public void printGraph() {
+        System.out.println("Graph in Adjacent List Representation.");
+        System.out.println(TABLE_HEADER);
+        for (int i = 0; i < V(); ++i) {
+            System.out.printf(ROW_FORMAT, String.valueOf(i), String.valueOf(isH(i)), "");
+            for (int node: adj(i)) {
+                System.out.printf("%d ", node);
+            }
+            System.out.println();
+        }
+    }
+
     /**
      * Builder for the graph
      */
@@ -126,7 +140,9 @@ public class CityGraph {
             if (node0 == node1 || edges.get(node0).contains(node1)) {
                 return;
             }
+            
             ++edgeNum;
+            
             edges.get(node0).add(node1);
             edges.get(node1).add(node0);
         }
