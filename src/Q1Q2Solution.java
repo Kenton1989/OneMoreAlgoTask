@@ -25,7 +25,7 @@ public class Q1Q2Solution {
      *      If a node cannot reach any hospital, put a -1.
      */
     
-    public Answer solve(CityGraph graph) {
+    public Q1Q2Answer solve(CityGraph graph) {
         int[] dist = new int[graph.V()];
         int[] hosp = new int[graph.V()];
         int[] parent = new int[graph.V()];
@@ -36,16 +36,16 @@ public class Q1Q2Solution {
         // Other Solution code
         Queue<Integer> queue = new LinkedList<>();
 
-        return new Answer(graph, dist, hosp, parent);
+        return new Q1Q2Answer(graph, dist, hosp, parent);
     }
 
-    public class Answer implements IAnswer {
+    private static class Q1Q2Answer implements Answer {
         public CityGraph graph;
         public int[] parent;
         public int[] dist;
         public int[] hosp;
 
-        Answer(CityGraph graph, int[] nearestDistance, int[] nearestHospital, int[] parent) {
+        Q1Q2Answer(CityGraph graph, int[] nearestDistance, int[] nearestHospital, int[] parent) {
             this.graph = graph;
             this.dist = nearestDistance;
             this.hosp = nearestHospital;

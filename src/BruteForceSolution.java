@@ -27,7 +27,7 @@ public class BruteForceSolution {
      *         If from a node N, only X hospitals can be reached and X < K, then arr[N] is a list
      *         of size X.
      */
-    public static Answer solve(CityGraph graph, int k) {
+    public Answer solve(CityGraph graph, int k) {
         @SuppressWarnings("unchecked")
         List<Integer>[] dist = new List[graph.V()];
         @SuppressWarnings("unchecked")
@@ -64,7 +64,7 @@ public class BruteForceSolution {
                 }
             }
         }
-        return new Answer(graph, dist, hosp);
+        return new BFAnswer(graph, dist, hosp);
     }
 
     public static List<Integer> shortestPath(CityGraph graph, Integer startNodeName, Integer endNodeName) {
@@ -114,12 +114,12 @@ public class BruteForceSolution {
         return path;
     }
 
-    public static class Answer implements IAnswer {
+    public static class BFAnswer implements Answer {
         public CityGraph graph;
         public List<Integer>[] dist;
         public List<Integer>[] hosp;
 
-        Answer(CityGraph graph, List<Integer>[] nearestDistance, List<Integer>[] nearestHospital) {
+        BFAnswer(CityGraph graph, List<Integer>[] nearestDistance, List<Integer>[] nearestHospital) {
             this.graph = graph;
             this.dist = nearestDistance;
             this.hosp = nearestHospital;
@@ -151,7 +151,8 @@ public class BruteForceSolution {
 
         int k = scanner.nextInt();
 
-        Answer answer = solve(builder.build(), k);
+        BruteForceSolution solution = new BruteForceSolution();
+        Answer answer = solution.solve(builder.build(), k);
         answer.printAns();
 
         scanner.close();

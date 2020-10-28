@@ -27,7 +27,7 @@ public class Q3Q4Solution {
      * @return
      */
 
-    public static Answer solve(CityGraph graph, int k) {
+    public Answer solve(CityGraph graph, int k) {
         @SuppressWarnings("unchecked")
         Set<Integer>[] hashSets = new Set[graph.V()];
         
@@ -66,20 +66,20 @@ public class Q3Q4Solution {
             }
         }
 
-        return new Answer(queues, distances, graph, k);
+        return new Q3Q4Answer(queues, distances, graph, k);
     }
 
-    public static class Answer implements IAnswer {
-        public static List<Integer>[] queues, distances;
-        public static CityGraph graph;
-        public static int k;
+    public static class Q3Q4Answer implements Answer {
+        public List<Integer>[] queues, distances;
+        public CityGraph graph;
+        public int k;
 
-        public Answer(List<Integer>[] queues, List<Integer>[] distances,
+        public Q3Q4Answer(List<Integer>[] queues, List<Integer>[] distances,
                       CityGraph graph, int k) {
-            Answer.queues = queues;
-            Answer.distances = distances;
-            Answer.graph = graph;
-            Answer.k = k;
+            this.queues = queues;
+            this.distances = distances;
+            this.graph = graph;
+            this.k = k;
         }
 
         public void printAns() {
@@ -118,7 +118,9 @@ public class Q3Q4Solution {
 
         int k = scanner.nextInt();
 
-        Answer answer = solve(builder.build(), k);
+        Q3Q4Solution solution = new Q3Q4Solution();
+        Answer answer = solution.solve(builder.build(), k);
+        
         answer.printAns();
 
         scanner.close();
