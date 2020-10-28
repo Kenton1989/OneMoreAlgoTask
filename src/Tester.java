@@ -7,15 +7,15 @@ public class Tester {
     Tester() {
     }
 
-    public void printHeader() {
+    public void printResultTableHeader() {
         System.out.println(TESTER_HEADER);
     }
     
-    public IAnswer test12(String testLabel, CityGraph graph) {
+    public Answer test12(String testLabel, CityGraph graph) {
         Q1Q2Solution solution = new Q1Q2Solution();
 
         long begTime = System.currentTimeMillis();
-        IAnswer answer = solution.solve(graph);
+        Answer answer = solution.solve(graph);
         long endTime = System.currentTimeMillis();
 
         printRow(testLabel, graph.V(), graph.E(), graph.H(), null, endTime-begTime);
@@ -23,11 +23,11 @@ public class Tester {
         return answer;
     }
 
-    public IAnswer test34(String testLabel, CityGraph graph, int k) {
+    public Answer test34(String testLabel, CityGraph graph, int k) {
         Q3Q4Solution solution = new Q3Q4Solution();
 
         long begTime = System.currentTimeMillis();
-        IAnswer answer = solution.solve(graph, k);
+        Answer answer = solution.solve(graph, k);
         long endTime = System.currentTimeMillis();
 
         printRow(testLabel, graph.V(), graph.E(), graph.H(), k, endTime-begTime);
@@ -35,11 +35,11 @@ public class Tester {
         return answer;
     }
 
-    public IAnswer testBF(String testLabel, CityGraph graph, int k) {
+    public Answer testBF(String testLabel, CityGraph graph, int k) {
         BruteForceSolution solution = new BruteForceSolution();
 
         long begTime = System.currentTimeMillis();
-        IAnswer answer = solution.solve(graph, k);
+        Answer answer = solution.solve(graph, k);
         long endTime = System.currentTimeMillis();
 
         printRow(testLabel, graph.V(), graph.E(), graph.H(), k, endTime-begTime);
