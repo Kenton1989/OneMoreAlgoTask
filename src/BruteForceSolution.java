@@ -1,9 +1,12 @@
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.print.PrintService;
 
 public class BruteForceSolution {
     /**
@@ -114,7 +117,7 @@ public class BruteForceSolution {
         return path;
     }
 
-    public static class BFAnswer implements Answer {
+    public static class BFAnswer extends Answer {
         public CityGraph graph;
         public List<Integer>[] dist;
         public List<Integer>[] hosp;
@@ -125,7 +128,7 @@ public class BruteForceSolution {
             this.hosp = nearestHospital;
         }
 
-        public void printAns() {
+        public void printAns(PrintStream printer) {
             
         }
     }

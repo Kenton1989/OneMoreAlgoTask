@@ -1,3 +1,5 @@
+import java.io.PrintStream;
+
 public class Tester {
     private static final String[] HEADERS = {"Label", "V", "E", "H", "K", "Runtime(ms)"};
     private static final String ROW_FORMAT = "%-30s %-8s %-15s %-8s %-8s %-10s";
@@ -11,7 +13,12 @@ public class Tester {
         System.out.println(TESTER_HEADER);
     }
     
-    public Answer test12(String testLabel, CityGraph graph) {
+    public void test12(String testLabel, CityGraph graph) {
+        Loader load = new Loader();
+        test12(testLabel, graph, load.noOutput());
+    }
+    
+    public void test12(String testLabel, CityGraph graph, PrintStream output) {
         Q1Q2Solution solution = new Q1Q2Solution();
 
         long begTime = System.currentTimeMillis();
@@ -20,10 +27,15 @@ public class Tester {
 
         printRow(testLabel, graph.V(), graph.E(), graph.H(), null, endTime-begTime);
 
-        return answer;
+        answer.printAns(output);
     }
 
-    public Answer test34(String testLabel, CityGraph graph, int k) {
+    public void test34(String testLabel, CityGraph graph, int k) {
+        Loader load = new Loader();
+        test34(testLabel, graph, k, load.noOutput());
+    }
+
+    public void test34(String testLabel, CityGraph graph, int k, PrintStream ansOutput) {
         Q3Q4Solution solution = new Q3Q4Solution();
 
         long begTime = System.currentTimeMillis();
@@ -32,10 +44,15 @@ public class Tester {
 
         printRow(testLabel, graph.V(), graph.E(), graph.H(), k, endTime-begTime);
 
-        return answer;
+        answer.printAns(ansOutput);
     }
 
-    public Answer testBF(String testLabel, CityGraph graph, int k) {
+    public void testBF(String testLabel, CityGraph graph, int k) {
+        Loader load = new Loader();
+        testBF(testLabel, graph, k, load.noOutput());
+    }
+
+    public void testBF(String testLabel, CityGraph graph, int k, PrintStream output) {
         BruteForceSolution solution = new BruteForceSolution();
 
         long begTime = System.currentTimeMillis();
@@ -44,7 +61,7 @@ public class Tester {
 
         printRow(testLabel, graph.V(), graph.E(), graph.H(), k, endTime-begTime);
 
-        return answer;
+        answer.printAns(output);
     }
 
     private void printRow(String label, int V, int E, int H, Integer K, long time) {

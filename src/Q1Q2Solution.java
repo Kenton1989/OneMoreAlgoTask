@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -39,7 +40,7 @@ public class Q1Q2Solution {
         return new Q1Q2Answer(graph, dist, hosp, parent);
     }
 
-    private static class Q1Q2Answer implements Answer {
+    private static class Q1Q2Answer extends Answer {
         public CityGraph graph;
         public int[] parent;
         public int[] dist;
@@ -52,7 +53,7 @@ public class Q1Q2Solution {
             this.parent = parent;
         }
 
-        public void printAns() {
+        public void printAns(PrintStream printer) {
             
         }
     }

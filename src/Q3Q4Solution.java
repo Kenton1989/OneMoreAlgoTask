@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -69,7 +70,7 @@ public class Q3Q4Solution {
         return new Q3Q4Answer(queues, distances, graph, k);
     }
 
-    public static class Q3Q4Answer implements Answer {
+    public static class Q3Q4Answer extends Answer {
         public List<Integer>[] queues, distances;
         public CityGraph graph;
         public int k;
@@ -82,18 +83,18 @@ public class Q3Q4Solution {
             this.k = k;
         }
 
-        public void printAns() {
+        public void printAns(PrintStream printer) {
             for (int i = 0; i < graph.V(); i++) {
-                System.out.printf("Point %d:\n", i);
+                printer.printf("Point %d:\n", i);
                 if (queues[i].size() < k) {
-                    System.out.printf("  This point cannot reach %d hospitals.\n", k);
+                    printer.printf("  This point cannot reach %d hospitals.\n", k);
                 }
-                System.out.printf("  Nearest %d hospitals:\n", queues[i].size());
+                printer.printf("  Nearest %d hospitals:\n", queues[i].size());
                 for (int j = 0; j < queues[i].size(); j++) {
-                    System.out.printf("    Hospital: %d Distance: %d\n",
+                    printer.printf("    Hospital: %d Distance: %d\n",
                                        queues[i].get(j), distances[i].get(j));
                 }
-                System.out.println();
+                printer.println();
             }
         }
     }
