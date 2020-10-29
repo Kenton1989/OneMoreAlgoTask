@@ -1,8 +1,8 @@
 public class App {
     public static void main(String[] args) {
         // aSmallTest();
-        repeatTimingTest();
-        // timeComplexityTest12();
+        // repeatTimingTest();
+        timeComplexityTest12();
         // timeComplexityTest34();
         // realGraphTest34();
     }

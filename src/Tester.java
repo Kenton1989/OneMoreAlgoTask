@@ -48,8 +48,7 @@ public class Tester {
      * @return the answer produced by the algorithm
      */
     public Answer test12(String testLabel, CityGraph graph) {
-        Loader load = new Loader();
-        return test12(testLabel, graph, load.noOutput());
+        return test12(testLabel, graph, null);
     }
     
     /**
@@ -84,8 +83,7 @@ public class Tester {
      * @return the answer produced by the algorithm
      */
     public Answer test34(String testLabel, CityGraph graph, int k) {
-        Loader load = new Loader();
-        return test34(testLabel, graph, k, load.noOutput());
+        return test34(testLabel, graph, k, null);
     }
 
     /**
@@ -122,8 +120,7 @@ public class Tester {
      * @return the answer produced by the algorithm
      */
     public Answer testBF(String testLabel, CityGraph graph, int k) {
-        Loader load = new Loader();
-        return testBF(testLabel, graph, k, load.noOutput());
+        return testBF(testLabel, graph, k, null);
     }
 
     /**

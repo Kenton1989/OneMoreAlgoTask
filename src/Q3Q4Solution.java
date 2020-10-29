@@ -83,7 +83,8 @@ public class Q3Q4Solution {
             this.k = k;
         }
 
-        public void printAns(PrintStream printer) {
+        @Override
+        protected void printAnsImpl(PrintStream printer) {
             for (int i = 0; i < graph.V(); i++) {
                 printer.printf("Point %d:\n", i);
                 if (queues[i].size() < k) {

@@ -74,24 +74,25 @@ public class Q1Q2Solution {
         private static final String[] HEADERS = {"Node#", "Nearest", "Length", "Path"};
         private static final String TABLE_HEADER = String.format(ROW_FORMAT, HEADERS[0], HEADERS[1], HEADERS[2], HEADERS[3]);
 
-        public void printAns(PrintStream printer) {
-            System.out.println(TABLE_HEADER);
+        @Override
+        protected void printAnsImpl(PrintStream printer) {
+            printer.println(TABLE_HEADER);
             for(int node: graph.nonH()) {
                 // If the distance is -1, there are no hospital can be reached from the node.
                 if (dist[node] == -1) {
-                    System.out.printf(ROW_FORMAT, node, "N/A", "N/A", "N/A\n");
+                    printer.printf(ROW_FORMAT, node, "N/A", "N/A", "N/A\n");
                     continue;
                 }
-                System.out.printf(ROW_FORMAT, node, hosp[node], dist[node], "");
+                printer.printf(ROW_FORMAT, node, hosp[node], dist[node], "");
                 int next = node;
                 
                 while (next != parent[next]) {
-                    System.out.print(next);
-                    System.out.print('-');
+                    printer.print(next);
+                    printer.print('-');
                     next = parent[next];
                 }
 
-                System.out.println(next);
+                printer.println(next);
             }
         }
     }

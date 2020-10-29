@@ -125,7 +125,8 @@ public class BruteForceSolution {
             this.hosp = nearestHospital;
         }
 
-        public void printAns(PrintStream printer) {
+        @Override
+        protected void printAnsImpl(PrintStream printer) {
             
         }
     }

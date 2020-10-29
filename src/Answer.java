@@ -5,12 +5,24 @@ public abstract class Answer {
      * Print the answer with the given printer.
      * @param printer the printer used to print answer.
      */
-    public abstract void printAns(PrintStream printer);
+    protected abstract void printAnsImpl(PrintStream printer);
     
     /**
      * Print the answer to system standard output stream.
      */
-    public void printAns() {
-        printAns(System.out);
+    public final void printAns() {
+        printAnsImpl(System.out);
+    }
+
+    /**
+     * Print the answer with the given printer.
+     * If the given printer is null, print nothing.
+     * @param printer the printer used to print answer.
+     */
+    public final void printAns(PrintStream printer) {
+        if (printer == null) {
+            return;
+        }
+        printAnsImpl(printer);
     }
 }
