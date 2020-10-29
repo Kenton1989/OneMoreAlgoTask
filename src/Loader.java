@@ -30,7 +30,7 @@ public class Loader {
      * @param hospitalNum the number of hospital in graph to be generated
      * @return a city graph with the given node number, edge number and hospital number
      */
-    public final CityGraph randomGraph(int nodeNum, int edgeNum, int hospitalNum) {
+    public final CityGraph randomGraph(int nodeNum, long edgeNum, int hospitalNum) {
         return loadRandomGraph(nodeNum, edgeNum, hospitalNum);
     }
 
@@ -78,7 +78,7 @@ public class Loader {
      * @param hospitalNum the number of hospital in graph to be generated
      * @return a city graph with the given node number, edge number and hospital number
      */
-    public CityGraph loadRandomGraph(int nodeNum, int edgeNum, int hospitalNum) {
+    public CityGraph loadRandomGraph(int nodeNum, long edgeNum, int hospitalNum) {
         // Arguments validation
         if (nodeNum < 0) {
             throw new IllegalArgumentException(
