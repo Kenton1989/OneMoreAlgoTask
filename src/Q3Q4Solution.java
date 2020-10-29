@@ -1,10 +1,5 @@
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Q3Q4Solution {
 
@@ -25,13 +20,13 @@ public class Q3Q4Solution {
      *
      * @param graph A undirected unweighted graph representing the city road network.
      * @param k     the number of nearest hospitals needed to be found.
-     * @return
+     * @return Answer contains the shortest distances to k nearest hospitals of each node.
      */
 
     public Answer solve(CityGraph graph, int k) {
         @SuppressWarnings("unchecked")
         Set<Integer>[] hashSets = new Set[graph.V()];
-        
+
         @SuppressWarnings("unchecked")
         List<Integer>[] queues = new List[graph.V()];
 
@@ -42,13 +37,12 @@ public class Q3Q4Solution {
 
 
         for (int i = 0; i < graph.V(); i++) {
-            hashSets[i] = new HashSet<>(3*k);
+            hashSets[i] = new HashSet<>(3 * k);
             queues[i] = new ArrayList<>(k);
             distances[i] = new ArrayList<>(k);
 
             if (graph.isHospital(i)) {
                 hashSets[i].add(i);
-
                 queues[i].add(i);
                 distances[i].add(0);
                 BFSQueue.push(new SearchContext(i, i, 0));
@@ -76,7 +70,7 @@ public class Q3Q4Solution {
         public int k;
 
         public Q3Q4Answer(List<Integer>[] queues, List<Integer>[] distances,
-                      CityGraph graph, int k) {
+                          CityGraph graph, int k) {
             this.queues = queues;
             this.distances = distances;
             this.graph = graph;
@@ -92,7 +86,7 @@ public class Q3Q4Solution {
                 printer.printf("  Nearest %d hospitals:\n", queues[i].size());
                 for (int j = 0; j < queues[i].size(); j++) {
                     printer.printf("    Hospital: %d Distance: %d\n",
-                                       queues[i].get(j), distances[i].get(j));
+                            queues[i].get(j), distances[i].get(j));
                 }
                 printer.println();
             }
@@ -121,7 +115,7 @@ public class Q3Q4Solution {
 
         Q3Q4Solution solution = new Q3Q4Solution();
         Answer answer = solution.solve(builder.build(), k);
-        
+
         answer.printAns();
 
         scanner.close();
