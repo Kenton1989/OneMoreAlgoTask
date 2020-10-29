@@ -9,23 +9,52 @@ import java.util.Set;
 
 public class Loader {
     public final static double DENSE_RATE = 0.66;
-    
+
+    /**
+     * Load input graph from given files
+     * @param roadFilePath the road net file to read
+     * @param hospFilePath the hospital file to read
+     * @return the city graph defined by the given files
+     */
     public final CityGraph fromFile(String roadFilePath, String hospFilePath) {
         return loadGraphFromFile(roadFilePath, hospFilePath);
     }
     
+    /**
+     * Load a random input graph with the given node number, edge number and hospital number 
+     * @param nodeNum the number of node of graph to be generated
+     * @param edgeNum the number of edge of graph to be generated
+     * @param hospitalNum the number of hospital in graph to be generated
+     * @return a city graph with the given node number, edge number and hospital number
+     */
     public final CityGraph random(int nodeNum, int edgeNum, int hospitalNum) {
         return loadRandomGraph(nodeNum, edgeNum, hospitalNum);
     }
 
+    /**
+     * Load a file as output for the answer.
+     * @param filePath the file used as output file
+     * @return a PrintStream binded to the given file
+     */
     public final PrintStream output(String filePath) {
         return loadOutputFile(filePath);
     }
 
+    /**
+     * Load a printer that will discard all the output it received
+     * @return a printer that will discard all the output it received
+     */
     public PrintStream noOutput() {
         return new PrintStream(OutputStream.nullOutputStream());
     }
     
+
+    /**
+     * Load input graph from given files
+     * @param roadFilePath the road net file to read
+     * @param hospFilePath the hospital file to read
+     * @return the city graph defined by the given files
+     */
     public CityGraph loadGraphFromFile(String roadFilePath, String hospFilePath) {
         CityGraph.Builder builder = new CityGraph.Builder();
 
@@ -39,7 +68,15 @@ public class Loader {
     }
 
 
+    /**
+     * Load a random input graph with the given node number, edge number and hospital number 
+     * @param nodeNum the number of node of graph to be generated
+     * @param edgeNum the number of edge of graph to be generated
+     * @param hospitalNum the number of hospital in graph to be generated
+     * @return a city graph with the given node number, edge number and hospital number
+     */
     public CityGraph loadRandomGraph(int nodeNum, int edgeNum, int hospitalNum) {
+        // Arguments validation
         if (nodeNum < 0) {
             throw new IllegalArgumentException(
                 "The input edge number "+nodeNum+" is smaller than 0.");
@@ -52,9 +89,17 @@ public class Loader {
                 "The input edge number "+edgeNum+
                 " exceeds legal range [0, "+maxEdge+"].");
         }
+       
+        if (nodeNum < hospitalNum || hospitalNum < 0) {
+            throw new IllegalArgumentException(
+                "The input hospital number "+hospitalNum+
+                " exceeds legal range [0, "+nodeNum+"].");
+        } 
 
         CityGraph.Builder builder = new CityGraph.Builder(nodeNum);
-        
+        Random rand = new Random();
+
+        // Generate edges
         // if it is a relatively dense graph, fill all the edge first.
         if (edgeNum > DENSE_RATE * maxEdge) {
             for (int i = 0; i < nodeNum; i++) {
@@ -63,9 +108,6 @@ public class Loader {
                 }
             }
         }
-
-        Random rand = new Random();
-        
         while (builder.edgeNum() != edgeNum) {
             int a = rand.nextInt(nodeNum);
             int b = rand.nextInt(nodeNum);
@@ -77,20 +119,13 @@ public class Loader {
             }
         }
 
-       
-        if (builder.nodeNum() < hospitalNum || hospitalNum < 0) {
-            throw new IllegalArgumentException(
-                "The input hospital number "+hospitalNum+
-                " exceeds legal range [0, "+builder.nodeNum()+"].");
-        } 
-
+        // Generate hospital
         // if hospitals are relatively dense, set all nodes as hospitals first.
         if (hospitalNum > DENSE_RATE * builder.nodeNum()) {
             for (int i = 0; i < builder.nodeNum(); i++) {
                 builder.setHospital(i);
             }
         }
-
         while (builder.hospitalNum() != hospitalNum) {
             int h = rand.nextInt(builder.nodeNum());
 
@@ -104,6 +139,11 @@ public class Loader {
         return builder.build();
     }
 
+    /**
+     * Load a file as output for the answer.
+     * @param filePath the file used as output file
+     * @return a PrintStream binded to the given file
+     */
     public PrintStream loadOutputFile(String filePath) {
         PrintStream printer = null;
 
@@ -117,8 +157,26 @@ public class Loader {
         return printer;
     }
 
+    /**
+     * Generate a hospital definition file on a city.
+     * @param filePath the output file for the definition of hospital.
+     * @param nodeNum the number of node in the city.
+     * @param hospitalNum the number of hospital to generate
+     */
     public void generateRandHospital(String filePath, int nodeNum, int hospitalNum) {
+        // Arguments validation
+        if (nodeNum < 0) {
+            throw new IllegalArgumentException(
+                "The input edge number "+nodeNum+" is smaller than 0.");
+        }
+       
+        if (nodeNum < hospitalNum || hospitalNum < 0) {
+            throw new IllegalArgumentException(
+                "The input hospital number "+hospitalNum+
+                " exceeds legal range [0, "+nodeNum+"].");
+        } 
         
+        // Generate hospital
         Set<Integer> hospSet = new HashSet<>(2 * hospitalNum);
         Random rand = new Random();
         
@@ -127,6 +185,7 @@ public class Loader {
             hospSet.add(randH);
         }
         
+        // output the result
         PrintStream out = getPrinter(filePath);
         out.println("# " + hospitalNum);
         for (int h: hospSet) {
