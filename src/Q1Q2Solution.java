@@ -32,7 +32,6 @@ public class Q1Q2Solution {
         int[] parent = new int[graph.V()];
         Arrays.fill(dist, -1);
 
-        // Other Solution code
         Queue<Integer> queue = new LinkedList<>();
 
         for(int h: graph.allH()) {
@@ -78,6 +77,7 @@ public class Q1Q2Solution {
         public void printAns(PrintStream printer) {
             System.out.println(TABLE_HEADER);
             for(int node: graph.nonH()) {
+                // If the distance is -1, there are no hospital can be reached from the node.
                 if (dist[node] == -1) {
                     System.out.printf(ROW_FORMAT, node, "N/A", "N/A", "N/A\n");
                     continue;

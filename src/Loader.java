@@ -268,6 +268,6 @@ public class Loader {
 
     public static void main(String[] args) {
         Loader loader = new Loader();
-        loader.generateRandHospital("real_road/PA/hospital.txt", 1088092, 1090);
+        loader.generateRandHospital("real_road/TX/hospital.txt", 1379917, 1377);
     }
 }
