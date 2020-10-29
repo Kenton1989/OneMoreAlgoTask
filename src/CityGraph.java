@@ -84,9 +84,9 @@ public class CityGraph {
     }
 
     private static String ROW_FORMAT = "%s\t%s\t%s";
-    private static String TABLE_HEADER = String.format(ROW_FORMAT, "Node#", "hospital?", "Adjacent Nodes");
+    private static String TABLE_HEADER = String.format(ROW_FORMAT, "Node#", "is H?", "Adjacent Nodes");
     public void printGraph(PrintStream printer) {
-        printer.println("City graph in Adjacent List Representation.");
+        printer.println("City graph in Adjacent List Representation:");
         printer.println(TABLE_HEADER);
         for (int i = 0; i < V(); ++i) {
             printer.printf(ROW_FORMAT, String.valueOf(i), String.valueOf(isH(i)), "");
