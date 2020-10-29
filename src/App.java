@@ -2,8 +2,9 @@ public class App {
     public static void main(String[] args) {
         // aSmallTest();
         // repeatTimingTest();
-        timeComplexityTest12();
+        // timeComplexityTest12();
         // timeComplexityTest34();
+        realGraphTest12();
         // realGraphTest34();
     }
 
@@ -139,5 +140,30 @@ public class App {
         test.test34("Real Graph - CA", graphCA, 5);
         test.test34("Real Graph - TX", graphTX, 5);
         test.test34("Real Graph - PA", graphPA, 5);
+    }
+
+    /**
+     * Testing the solution for Q1 & Q2 with a real graph.
+     * The answer of the algorithm is discarded.
+     */
+    public static void realGraphTest12() {
+        System.out.println("Testing the solution for Q1 & Q2 with real graph.");
+        
+        Tester test = new Tester();
+        Loader load = new Loader();
+
+        CityGraph graphCA = load.fromFile("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt");
+        CityGraph graphTX = load.fromFile("real_road/TX/roadNet.txt", "real_road/TX/hospital.txt");
+        CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
+
+        test.printResultTableHeader();
+        test.test12("Dummy Test 1", load.randomGraph(100000, 1000000, 10));
+        test.test12("Dummy Test 2", load.randomGraph(100000, 1000000, 10));
+        test.test12("Dummy Test 3", load.randomGraph(100000, 1000000, 10));
+        for (int i = 0; i < 10; i++) {
+            test.test12("Real Graph - CA Round "+i, graphCA);
+            test.test12("Real Graph - TX Round "+i, graphTX);
+            test.test12("Real Graph - PA Round "+i, graphPA);
+        }
     }
 }
