@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,13 +10,13 @@ import java.util.Set;
 public class CityGraph {
 
     private int nodeNum;
-    private int edgeNum;
+    private long edgeNum;
     private List<List<Integer>> edges;
     private List<Integer> hospitals;
     private List<Integer> nonHospitals;
     private boolean[] isHospital;
 
-    public CityGraph(int nodeNum, int edgeNum, List<List<Integer>> edges, List<Integer> hospitals,
+    public CityGraph(int nodeNum, long edgeNum, List<List<Integer>> edges, List<Integer> hospitals,
             List<Integer> nonHospitals, boolean[] isHospital) {
 
         this.nodeNum = nodeNum;
@@ -30,7 +31,7 @@ public class CityGraph {
         return nodeNum;
     }
 
-    public int edgeNum() {
+    public long edgeNum() {
         return edgeNum;
     }
 
@@ -58,7 +59,7 @@ public class CityGraph {
         return nodeNum();
     }
 
-    public final int E() {
+    public final long E() {
         return edgeNum();
     }
 
@@ -82,18 +83,22 @@ public class CityGraph {
         return nonHospitals();
     }
 
-    private static String ROW_FORMAT = "%-8s %-10s %s";
-    private static String TABLE_HEADER = String.format(ROW_FORMAT, "Node#", "isHospital", "Adjacent Nodes");
-    public void printGraph() {
-        System.out.println("Graph in Adjacent List Representation.");
-        System.out.println(TABLE_HEADER);
+    private static String ROW_FORMAT = "%s\t%s\t%s";
+    private static String TABLE_HEADER = String.format(ROW_FORMAT, "Node#", "hospital?", "Adjacent Nodes");
+    public void printGraph(PrintStream printer) {
+        printer.println("City graph in Adjacent List Representation.");
+        printer.println(TABLE_HEADER);
         for (int i = 0; i < V(); ++i) {
-            System.out.printf(ROW_FORMAT, String.valueOf(i), String.valueOf(isH(i)), "");
+            printer.printf(ROW_FORMAT, String.valueOf(i), String.valueOf(isH(i)), "");
             for (int node: adj(i)) {
-                System.out.printf("%d ", node);
+                printer.printf("%d ", node);
             }
-            System.out.println();
+            printer.println();
         }
+    }
+
+    public void printGraph() {
+        printGraph(System.out);
     }
 
     /**
