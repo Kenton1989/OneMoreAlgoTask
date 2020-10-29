@@ -11,14 +11,14 @@ public class App {
         System.out.println("Big graph loaded");
 
         System.out.println("Loading real graph - PA");
-        CityGraph caGraph = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
+        // CityGraph caGraph = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
         System.out.println("Loaded real graph - PA");
 
         test.printResultTableHeader();
 
-        test.test34("Small random graph", smallRandGraph, 3);
+        Answer answer =  test.test34("Small random graph", smallRandGraph, 3);
         test.test34("Big random graph", bigRandGraph, 10);
-        test.test34("Real road - CA", caGraph, 10, load.output("real_road/PA/answer.txt"));
+        // test.test34("Real road - CA", caGraph, 10, load.output("real_road/PA/answer.txt"));
 
         System.out.println();
 
@@ -26,7 +26,6 @@ public class App {
         smallRandGraph.printGraph();
 
         System.out.println("Answer for small graph:");
-
-        
+        answer.printAns();
     }
 }

@@ -5,9 +5,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.print.PrintService;
-
 public class BruteForceSolution {
     /**
      * Brute force solution for question in lab 2.
