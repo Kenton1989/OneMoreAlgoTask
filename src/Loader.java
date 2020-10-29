@@ -7,6 +7,9 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * A tool used to load graph and file.
+ */
 public class Loader {
     public final static double DENSE_RATE = 0.66;
 
@@ -27,7 +30,7 @@ public class Loader {
      * @param hospitalNum the number of hospital in graph to be generated
      * @return a city graph with the given node number, edge number and hospital number
      */
-    public final CityGraph random(int nodeNum, int edgeNum, int hospitalNum) {
+    public final CityGraph randomGraph(int nodeNum, int edgeNum, int hospitalNum) {
         return loadRandomGraph(nodeNum, edgeNum, hospitalNum);
     }
 
