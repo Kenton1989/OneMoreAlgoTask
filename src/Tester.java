@@ -11,7 +11,7 @@ import java.io.PrintStream;
  */
 public class Tester {
     private static final String[] HEADERS = {"Label", "V", "E", "H", "K", "Runtime(ms)"};
-    private static final String ROW_FORMAT = "%-30s %-8s %-15s %-8s %-8s %-10s";
+    private static final String ROW_FORMAT = "%-30s %-9s %-16s %-8s %-8s %-10s";
 
     public static final String TESTER_HEADER = String.format(ROW_FORMAT, HEADERS[0], HEADERS[1], HEADERS[2], HEADERS[3], HEADERS[4], HEADERS[5]);
     public static final PrintStream DEFAULT_OUTPUT = System.out;
