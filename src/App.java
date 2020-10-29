@@ -1,9 +1,10 @@
 public class App {
     public static void main(String[] args) {
-        aSmallTest();
-        // repeatTimingTest();
+        // aSmallTest();
+        repeatTimingTest();
         // timeComplexityTest12();
         // timeComplexityTest34();
+        // realGraphTest34();
     }
 
     /**
@@ -115,5 +116,28 @@ public class App {
                 }
             }
         }
+    }
+
+    /**
+     * Testing the solution for Q3 & Q4 with a real graph.
+     * The answer of the algorithm is discarded.
+     */
+    public static void realGraphTest34() {
+        System.out.println("Testing the solution for Q3 & Q4 with real graph.");
+        
+        Tester test = new Tester();
+        Loader load = new Loader();
+
+        CityGraph graphCA = load.fromFile("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt");
+        CityGraph graphTX = load.fromFile("real_road/TX/roadNet.txt", "real_road/TX/hospital.txt");
+        CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
+
+        test.printResultTableHeader();
+        test.test34("Dummy Test 1", load.randomGraph(100000, 1000000, 10), 5);
+        test.test34("Dummy Test 2", load.randomGraph(100000, 1000000, 10), 5);
+        test.test34("Dummy Test 3", load.randomGraph(100000, 1000000, 10), 5);
+        test.test34("Real Graph - CA", graphCA, 5);
+        test.test34("Real Graph - TX", graphTX, 5);
+        test.test34("Real Graph - PA", graphPA, 5);
     }
 }
