@@ -1,3 +1,5 @@
+package lab2algo;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -85,15 +87,19 @@ public class Q3Q4Solution {
 
         @Override
         protected void printAnsImpl(PrintStream printer) {
-            for (int i = 0; i < graph.V(); i++) {
-                printer.printf("Point %d:\n", i);
-                if (queues[i].size() < k) {
-                    printer.printf("  This point cannot reach %d hospitals.\n", k);
-                }
-                printer.printf("  Nearest %d hospitals:\n", queues[i].size());
-                for (int j = 0; j < queues[i].size(); j++) {
-                    printer.printf("    Hospital: %d Distance: %d\n",
-                                       queues[i].get(j), distances[i].get(j));
+            printer.println("All the buildings and their nearest "+k+" hospitals, and the corresponding distance.");
+            // print header
+            printer.print("Node\thosp?\t");
+            for (int i = 1; i <= k; ++i) {
+                printer.print("Hosp"+i+"\t"+"Dist"+i+"\t");
+            }
+            printer.println();
+
+            // print answers
+            for (int node = 0; node < graph.V(); ++node) {
+                printer.print(node+"\t"+graph.isH(node)+"\t");
+                for (int i = 0; i < queues[node].size(); i++) {
+                    printer.print(queues[node].get(i)+"\t"+distances[node].get(i)+"\t");
                 }
                 printer.println();
             }

@@ -1,3 +1,5 @@
+package lab2algo;
+
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;

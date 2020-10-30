@@ -1,3 +1,5 @@
+package lab2algo;
+
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,20 +14,20 @@ public class Q1Q2Solution {
      * 
      * @param graph A undirected unweighted graph representing a city.
      * @return Three int array representing the answer.
-     * <p>
-     *      The first one is the distance between the node and the nearest hospital.
-     *      If a node is hospital, the distance is 0.
-     *      If a node cannot reach any hospital, the diatance is -1.
-     * <p>
-     *      The second one is the node id of the nearest hospital.
-     *      If a node is hospital, the nearest hospital is itself.
-     *      If a node cannot reach any hospital, the value is not specified.
-     * <p>
-     *      The third one is the parent of a node in the BFS tree.
-     *      If a node is hospital, its parent is itself.
-     *      If a node cannot reach any hospital, the value is not specified.
+     *         <p>
+     *         The first one is the distance between the node and the nearest
+     *         hospital. If a node is hospital, the distance is 0. If a node cannot
+     *         reach any hospital, the diatance is -1.
+     *         <p>
+     *         The second one is the node id of the nearest hospital. If a node is
+     *         hospital, the nearest hospital is itself. If a node cannot reach any
+     *         hospital, the value is not specified.
+     *         <p>
+     *         The third one is the parent of a node in the BFS tree. If a node is
+     *         hospital, its parent is itself. If a node cannot reach any hospital,
+     *         the value is not specified.
      */
-    
+
     public Q1Q2Answer solve(CityGraph graph) {
         int[] dist = new int[graph.V()];
         int[] hosp = new int[graph.V()];
@@ -34,7 +36,7 @@ public class Q1Q2Solution {
 
         Queue<Integer> queue = new LinkedList<>();
 
-        for(int h: graph.allH()) {
+        for (int h : graph.allH()) {
             queue.add(h);
             dist[h] = 0;
             hosp[h] = h;
@@ -43,7 +45,7 @@ public class Q1Q2Solution {
 
         while (!queue.isEmpty()) {
             int node = queue.poll();
-            for (int next: graph.adj(node)) {
+            for (int next : graph.adj(node)) {
                 // distance == -1 means the node haven't been accessed.
                 if (dist[next] == -1) {
                     dist[next] = dist[node] + 1;
@@ -71,13 +73,14 @@ public class Q1Q2Solution {
         }
 
         private static final String ROW_FORMAT = "%s\t%s\t%s\t%s";
-        private static final String[] HEADERS = {"Node#", "Nearest", "Length", "Path"};
-        private static final String TABLE_HEADER = String.format(ROW_FORMAT, HEADERS[0], HEADERS[1], HEADERS[2], HEADERS[3]);
+        private static final String[] HEADERS = { "Node#", "Nearest", "Length", "Path" };
+        private static final String TABLE_HEADER = String.format(ROW_FORMAT, HEADERS[0], HEADERS[1], HEADERS[2],
+                HEADERS[3]);
 
         @Override
         protected void printAnsImpl(PrintStream printer) {
             printer.println(TABLE_HEADER);
-            for(int node: graph.nonH()) {
+            for (int node : graph.nonH()) {
                 // If the distance is -1, there are no hospital can be reached from the node.
                 if (dist[node] == -1) {
                     printer.printf(ROW_FORMAT, node, "N/A", "N/A", "N/A\n");
@@ -85,7 +88,7 @@ public class Q1Q2Solution {
                 }
                 printer.printf(ROW_FORMAT, node, hosp[node], dist[node], "");
                 int next = node;
-                
+
                 while (next != parent[next]) {
                     printer.print(next);
                     printer.print('-');
@@ -101,7 +104,20 @@ public class Q1Q2Solution {
         Tester test = new Tester();
         Loader load = new Loader();
 
-        CityGraph smallGraph = load.randomGraph(20, 20, 2);
+        CityGraph.Builder builder = new CityGraph.Builder(8);
+        builder.addEdge(0, 1);
+        builder.addEdge(1, 2);
+        builder.addEdge(2, 3);
+        builder.addEdge(3, 4);
+        builder.addEdge(4, 5);
+        builder.addEdge(5, 6);
+        builder.addEdge(6, 7);
+        builder.addEdge(0, 8);
+        builder.addEdge(8, 7);
+        builder.setHospital(0);
+        // builder.setHospital(7);
+
+        CityGraph smallGraph = builder.build();
         Answer ans34;
 
         test.printResultTableHeader();

@@ -1,3 +1,5 @@
+package lab2algo;
+
 import java.io.PrintStream;
 
 /**
@@ -21,7 +23,7 @@ public class Tester {
     /**
      * A tester that prints the timing result to std output
      */
-    Tester() {
+    public Tester() {
         this(DEFAULT_OUTPUT);
     }
 
@@ -29,7 +31,7 @@ public class Tester {
      * A tester that prints the timing result to the given output stream,
      * @param timingOutput the stream to output the result,
      */
-    Tester(PrintStream timingOutput) {
+    public Tester(PrintStream timingOutput) {
         this.timingOutput = timingOutput;
     }
 
