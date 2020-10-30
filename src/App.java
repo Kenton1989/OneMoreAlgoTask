@@ -1,11 +1,61 @@
+import lab2algo.Answer;
+import lab2algo.CityGraph;
+import lab2algo.Loader;
+import lab2algo.Tester;
+
 public class App {
     public static void main(String[] args) {
+        // test12WithFiles("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", "output12-CA.txt");
+        test34WithFilesAndK("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", 3, "output34-CA.txt");
         // aSmallTest();
         // repeatTimingTest();
         // timeComplexityTest12();
         // timeComplexityTest34();
-        realGraphTest12();
+        // realGraphTest12();
         // realGraphTest34();
+        // realGraphTest12AndOutput();
+        // realGraphTest34AndOutput();
+    }
+
+    public static void test12WithFiles(String roadNetFile, String hospitalFile, String outputFile) {
+        Tester test = new Tester();
+        Loader load = new Loader();
+
+        System.out.println("Testing the the solution to Q1/Q2 with input files: ");
+        System.out.println(roadNetFile);
+        System.out.println(hospitalFile);
+        System.out.println("and output file: ");
+        System.out.println(outputFile);
+        System.out.println();
+
+        System.out.print("Loading input file... ");
+        CityGraph graph = load.fromFile(roadNetFile, hospitalFile);
+        System.out.println("DONE!");
+
+        System.out.println("Start testing");
+        test.printResultTableHeader();
+        test.test12("Test 12 with files", graph, load.output(outputFile));
+    }
+
+    public static void test34WithFilesAndK(String roadNetFile, String hospitalFile, int k, String outputFile) {
+        Tester test = new Tester();
+        Loader load = new Loader();
+
+        System.out.println("Testing the the solution to Q3/Q4 with input files: ");
+        System.out.println(roadNetFile);
+        System.out.println(hospitalFile);
+        System.out.println("with K = " + k);
+        System.out.println("and output file: ");
+        System.out.println(outputFile);
+        System.out.println();
+
+        System.out.print("Loading input file... ");
+        CityGraph graph = load.fromFile(roadNetFile, hospitalFile);
+        System.out.println("DONE!");
+
+        System.out.println("Start testing");
+        test.printResultTableHeader();
+        test.test34("Test 34 with files", graph, k, load.output(outputFile));
     }
 
     /**
@@ -165,5 +215,39 @@ public class App {
             test.test12("Real Graph - TX Round "+i, graphTX);
             test.test12("Real Graph - PA Round "+i, graphPA);
         }
+    }
+
+    /**
+     * Testing the solution for Q1 & Q2 with a real graph PA.
+     * The answer of the algorithm is saved to output12-PA.txt.
+     */
+    private static String OUTPUT_FILE_12 = "output12-PA.txt";
+    public static void realGraphTest12AndOutput() {
+        System.out.println("Testing the solution for Q1 & Q2 with real graph, and output the answer to "+OUTPUT_FILE_12);
+        
+        Tester test = new Tester();
+        Loader load = new Loader();
+
+        CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
+
+        test.test12("Real Graph - PA, Ans for 1/2", graphPA, load.output(OUTPUT_FILE_12));
+    }
+    
+
+    /**
+     * Testing the solution for Q3 & Q4 with a real graph PA.
+     * The answer of the algorithm is saved to output34-PA.txt.
+     */
+    private static String OUTPUT_FILE_34 = "output34-PA.txt";
+    public static void realGraphTest34AndOutput() {
+        System.out.println("Testing the solution for Q3 & Q4 with real graph, and output the answer to "+OUTPUT_FILE_34);
+        
+        Tester test = new Tester();
+        Loader load = new Loader();
+
+        CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
+
+        test.printResultTableHeader();
+        test.test34("Real Graph - PA, Ans for 3/4", graphPA, 5, load.output(OUTPUT_FILE_34));
     }
 }
