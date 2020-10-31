@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -32,44 +33,44 @@ public class Q3Q4Solution {
 
     public Answer solve(CityGraph graph, int k) {
         @SuppressWarnings("unchecked")
-        Set<Integer>[] hashSets = new Set[graph.V()];
+        Set<Integer>[] visitedH = new Set[graph.V()];
         
         @SuppressWarnings("unchecked")
-        List<Integer>[] queues = new List[graph.V()];
+        List<Integer>[] orderedH = new List[graph.V()];
 
         @SuppressWarnings("unchecked")
         List<Integer>[] distances = new List[graph.V()];
 
-        LinkedList<SearchContext> BFSQueue = new LinkedList<>();
+        Queue<SearchContext> BFSQueue = new LinkedList<>();
 
 
         for (int i = 0; i < graph.V(); i++) {
-            hashSets[i] = new HashSet<>(3*k);
-            queues[i] = new ArrayList<>(k);
+            visitedH[i] = new HashSet<>(2*k);
+            orderedH[i] = new ArrayList<>(k);
             distances[i] = new ArrayList<>(k);
 
             if (graph.isHospital(i)) {
-                hashSets[i].add(i);
+                visitedH[i].add(i);
 
-                queues[i].add(i);
+                orderedH[i].add(i);
                 distances[i].add(0);
-                BFSQueue.push(new SearchContext(i, i, 0));
+                BFSQueue.add(new SearchContext(i, i, 0));
             }
         }
 
         while (!BFSQueue.isEmpty()) {
-            SearchContext context = BFSQueue.removeLast();
+            SearchContext context = BFSQueue.poll();
             for (int adj : graph.adj(context.currentNode)) {
-                if (hashSets[adj].size() < k && !hashSets[adj].contains(context.sourceHospital)) {
-                    hashSets[adj].add(context.sourceHospital);
-                    queues[adj].add(context.sourceHospital);
+                if (visitedH[adj].size() < k && !visitedH[adj].contains(context.sourceHospital)) {
+                    visitedH[adj].add(context.sourceHospital);
+                    orderedH[adj].add(context.sourceHospital);
                     distances[adj].add(context.distance + 1);
-                    BFSQueue.push(new SearchContext(adj, context.sourceHospital, context.distance + 1));
+                    BFSQueue.add(new SearchContext(adj, context.sourceHospital, context.distance + 1));
                 }
             }
         }
 
-        return new Q3Q4Answer(queues, distances, graph, k);
+        return new Q3Q4Answer(orderedH, distances, graph, k);
     }
 
     public static class Q3Q4Answer extends Answer {
