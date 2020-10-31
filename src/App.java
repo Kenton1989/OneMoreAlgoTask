@@ -5,9 +5,14 @@ import lab2algo.Tester;
 
 public class App {
     public static void main(String[] args) {
+        // Notes:
+        // the function name containing "12" means testing the solution for Q1/Q2
+        // the function name containing "34" means testing the solution for Q3/Q4
+
+        // uncomment the follow test example to run the example
+        // aSmallTest();
         // test12WithFiles("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", "output12-CA.txt");
         test34WithFilesAndK("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", 3, "output34-CA.txt");
-        // aSmallTest();
         // repeatTimingTest();
         // timeComplexityTest12();
         // timeComplexityTest34();
