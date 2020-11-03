@@ -1,0 +1,12 @@
+To test our algorithm, please refer to ExampleApp.java to find more details, 
+and write your own test cases if necessary.
+
+After editing the ExampleApp.java, compile the code and
+run the ExampleApp using the script 
+"unix-compile-run-clean.sh" for UNIX-like system (e.g. OSX, Linux)
+or "win-compile-run-clean.bat" for Windows system.
+
+Or you can compile and run them manually with following commands:
+
+javac *.java lab2algo/*.java
+java ExampleApp
