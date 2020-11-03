@@ -25,6 +25,8 @@ public abstract class Answer {
         if (printer == null) {
             return;
         }
+        System.out.println("Printing answer...");
         printAnsImpl(printer);
+        System.out.println("Finished Printing");
     }
 }

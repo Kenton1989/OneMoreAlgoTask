@@ -1,27 +1,59 @@
+import java.io.PrintStream;
+
 import lab2algo.Answer;
 import lab2algo.CityGraph;
 import lab2algo.Loader;
 import lab2algo.Tester;
 
-public class App {
+public class ExampleApp {
     public static void main(String[] args) {
-        // Notes:
+        // *************************************
+        // ************* Notes *****************
+        // *************************************
         // the function name containing "12" means testing the solution for Q1/Q2
         // the function name containing "34" means testing the solution for Q3/Q4
 
         // uncomment the follow test example to run the example
-        // aSmallTest();
+        aSmallTest();
         // test12WithFiles("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", "output12-CA.txt");
-        test34WithFilesAndK("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", 3, "output34-CA.txt");
+        // test34WithFilesAndK("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", 3, "output34-CA.txt");
+        // randomTest12(100, 1000, 5, "output12-random.txt");
+        // randomTest34(100, 1000, 5, 3, "output12-random.txt");
         // repeatTimingTest();
         // timeComplexityTest12();
         // timeComplexityTest34();
         // realGraphTest12();
         // realGraphTest34();
-        // realGraphTest12AndOutput();
-        // realGraphTest34AndOutput();
     }
 
+    /**
+     * Testing algorithms on a small graph. Print the timing result and answer to
+     * standard output.
+     */
+    public static void aSmallTest() {
+        System.out.println("Testing on a small graph");
+        Tester test = new Tester();
+        Loader load = new Loader();
+
+        CityGraph smallGraph = load.randomGraph(6, 10, 2);
+        Answer ans34;
+
+        test.printResultTableHeader();
+        ans34 = test.test12("Small test for Q1Q2", smallGraph);
+
+        System.out.println();
+        System.out.println("Tested graph:");
+        smallGraph.printGraph();
+
+        System.out.println();
+        System.out.println("Answer:");
+        ans34.printAns();
+    }
+
+    /**
+     * Testing the solution for Q1 & Q2 with the graph defined by roadNetFile and hospitalFile.
+     * The answer of the algorithm is printed to the outputFile.
+     */
     public static void test12WithFiles(String roadNetFile, String hospitalFile, String outputFile) {
         Tester test = new Tester();
         Loader load = new Loader();
@@ -42,6 +74,10 @@ public class App {
         test.test12("Test 12 with files", graph, load.output(outputFile));
     }
 
+    /**
+     * Testing the solution for Q3 & Q4 with the graph defined by roadNetFile and hospitalFile.
+     * The answer of the algorithm is printed to the outputFile.
+     */
     public static void test34WithFilesAndK(String roadNetFile, String hospitalFile, int k, String outputFile) {
         Tester test = new Tester();
         Loader load = new Loader();
@@ -64,27 +100,57 @@ public class App {
     }
 
     /**
-     * Testing algorithms on a small graph. Print the timing result and answer to
-     * standard output.
+     * Testing the solution for Q1 & Q2 with a random graph.
+     * The generated graph is printed to the outputFile.
+     * The answer of the algorithm is printed to the outputFile.
      */
-    public static void aSmallTest() {
-        System.out.println("Testing on a small graph");
+    public static void randomTest12(int nodeNum, int edgeNum, int hospitalNum, String outputFile) {
+        System.out.println("Testing the solution for Q1 & Q2 with random graph.");
+        System.out.println("Edge number = "+edgeNum);
+        System.out.println("Node number = "+nodeNum);
+        System.out.println("Hospital number = "+hospitalNum);
+        
         Tester test = new Tester();
         Loader load = new Loader();
 
-        CityGraph smallGraph = load.randomGraph(30, 100, 2);
-        Answer ans34;
+        System.out.print("Generating random graph... ");
+        CityGraph graph = load.randomGraph(nodeNum, edgeNum, hospitalNum);
+        System.out.println("DONE!");
 
+        PrintStream output = load.output(outputFile);
+        
+        graph.printGraph(output);
+
+        System.out.println("Start testing");
         test.printResultTableHeader();
-        ans34 = test.test12("Small test for Q1Q2", smallGraph);
+        test.test12("Random graph test", graph, output);
+    }
+    
+    /**
+     * Testing the solution for Q3 & Q4 with a random graph.
+     * The generated graph is printed to the outputFile.
+     * The answer of the algorithm is printed to the outputFile.
+     */
+    public static void randomTest34(int nodeNum, int edgeNum, int hospitalNum, int k, String outputFile) {
+        System.out.println("Testing the solution for Q1 & Q2 with random graph.");
+        System.out.println("Edge number = "+edgeNum);
+        System.out.println("Node number = "+nodeNum);
+        System.out.println("Hospital number = "+hospitalNum);
+        
+        Tester test = new Tester();
+        Loader load = new Loader();
 
-        System.out.println();
-        System.out.println("Tested graph:");
-        smallGraph.printGraph();
+        System.out.print("Generating random graph... ");
+        CityGraph graph = load.randomGraph(nodeNum, edgeNum, hospitalNum);
+        System.out.println("DONE!");
 
-        System.out.println();
-        System.out.println("Answer:");
-        ans34.printAns();
+        PrintStream output = load.output(outputFile);
+        
+        graph.printGraph(output);
+
+        System.out.println("Start testing");
+        test.printResultTableHeader();
+        test.test34("Random graph test", graph, k, output);
     }
 
     /**
@@ -184,9 +250,11 @@ public class App {
         Tester test = new Tester();
         Loader load = new Loader();
 
+        System.out.print("Loading graphs... ");
         CityGraph graphCA = load.fromFile("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt");
         CityGraph graphTX = load.fromFile("real_road/TX/roadNet.txt", "real_road/TX/hospital.txt");
         CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
+        System.out.println("DONE!");
 
         test.printResultTableHeader();
         test.test34("Dummy Test 1", load.randomGraph(100000, 1000000, 10), 5);
@@ -207,9 +275,11 @@ public class App {
         Tester test = new Tester();
         Loader load = new Loader();
 
+        System.out.print("Loading graphs... ");
         CityGraph graphCA = load.fromFile("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt");
         CityGraph graphTX = load.fromFile("real_road/TX/roadNet.txt", "real_road/TX/hospital.txt");
         CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
+        System.out.println("DONE!");
 
         test.printResultTableHeader();
         test.test12("Dummy Test 1", load.randomGraph(100000, 1000000, 10));
@@ -220,39 +290,5 @@ public class App {
             test.test12("Real Graph - TX Round "+i, graphTX);
             test.test12("Real Graph - PA Round "+i, graphPA);
         }
-    }
-
-    /**
-     * Testing the solution for Q1 & Q2 with a real graph PA.
-     * The answer of the algorithm is saved to output12-PA.txt.
-     */
-    private static String OUTPUT_FILE_12 = "output12-PA.txt";
-    public static void realGraphTest12AndOutput() {
-        System.out.println("Testing the solution for Q1 & Q2 with real graph, and output the answer to "+OUTPUT_FILE_12);
-        
-        Tester test = new Tester();
-        Loader load = new Loader();
-
-        CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
-
-        test.test12("Real Graph - PA, Ans for 1/2", graphPA, load.output(OUTPUT_FILE_12));
-    }
-    
-
-    /**
-     * Testing the solution for Q3 & Q4 with a real graph PA.
-     * The answer of the algorithm is saved to output34-PA.txt.
-     */
-    private static String OUTPUT_FILE_34 = "output34-PA.txt";
-    public static void realGraphTest34AndOutput() {
-        System.out.println("Testing the solution for Q3 & Q4 with real graph, and output the answer to "+OUTPUT_FILE_34);
-        
-        Tester test = new Tester();
-        Loader load = new Loader();
-
-        CityGraph graphPA = load.fromFile("real_road/PA/roadNet.txt", "real_road/PA/hospital.txt");
-
-        test.printResultTableHeader();
-        test.test34("Real Graph - PA, Ans for 3/4", graphPA, 5, load.output(OUTPUT_FILE_34));
     }
 }

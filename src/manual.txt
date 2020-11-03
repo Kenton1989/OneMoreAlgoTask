@@ -1,0 +1,6 @@
+To test our algorithm, please refer to ExampleApp.java, and write your own test cases if necessary.
+
+Compile the code and run the ExampleApp as main class after the test case is writte:
+
+javac *.java lab2algo/*.javac
+java ExampleApp
