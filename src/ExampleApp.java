@@ -14,7 +14,7 @@ public class ExampleApp {
         // the function name containing "34" means testing the solution for Q3/Q4
 
         // uncomment the follow test example to run the example
-        aSmallTest();
+        // aSmallTest();
         // test12WithFiles("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", "output12-CA.txt");
         // test34WithFilesAndK("real_road/CA/roadNet.txt", "real_road/CA/hospital.txt", 3, "output34-CA.txt");
         // randomTest12(100, 1000, 5, "output12-random.txt");
@@ -22,7 +22,7 @@ public class ExampleApp {
         // repeatTimingTest();
         // timeComplexityTest12();
         // timeComplexityTest34();
-        // realGraphTest12();
+        realGraphTest12();
         // realGraphTest34();
     }
 
